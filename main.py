@@ -6,6 +6,7 @@ from kivy import platform
 from gui_buttons import ThButton
 import io
 import contextlib
+from kivy.core.clipboard import Clipboard
 
 if platform == 'android':
     from android.permissions import request_permissions, Permission
@@ -31,6 +32,9 @@ class MyBoxLayout(BoxLayout):
             except Exception as e:
                 out_label.text += str(e)
                 out_label.text += '\n'
+
+    def on_paste(self, code_input: CodeInput):
+        code_input.text = Clipboard.paste()
 
     def on_button2_click(self):
         print("Button 2 clicked!")
