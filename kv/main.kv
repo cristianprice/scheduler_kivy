@@ -1,0 +1,37 @@
+#:import PythonLexer kivy.extras.highlight.PythonLexer
+
+<MyBoxLayout>:
+    orientation: 'vertical'
+    padding: 20
+    spacing: 20
+
+    CodeInput:
+        lexer: PythonLexer()
+        size_hint_y: .9
+        height: 200
+        hint_text: "Enter your Python code here"
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: .1
+        spacing: 20
+
+        RoundedButton:
+            text: "Run"
+            on_release: root.on_button1_click()
+
+        RoundedButton:
+            text: "Format"
+            on_release: root.on_button2_click()
+
+<RoundedButton@Button>:
+    background_normal: ''  # Remove default background image
+    background_down: ''  # Remove background image when button is pressed
+    background_color: 0, 0, 0, 0  # Fully transparent background
+    canvas.before:
+        Color:
+            rgba: (0.2, 0.6, 0.86, 1) if self.state == 'normal' else (0.1, 0.5, 0.76, 1)  # Custom background color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10, 10, 10, 10]  # Rounded corners
