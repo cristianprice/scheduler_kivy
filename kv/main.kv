@@ -1,37 +1,52 @@
 #:import PythonLexer kivy.extras.highlight.PythonLexer
+#:include kv/buttons.kv
 
 <MyBoxLayout>:
     orientation: 'vertical'
-    padding: 20
-    spacing: 20
+    padding: 10
+    spacing: 10
 
-    CodeInput:
-        lexer: PythonLexer()
-        size_hint_y: .9
-        height: 200
-        hint_text: "Enter your Python code here"
+    ScrollView:
+        do_scroll_x: True
+        do_scroll_y: True        
+        CodeInput:
+            id: code_input
+            do_wrap: False
+            width: 800
+            height: 200
+            text: "print('Hello, World!')"
+            lexer: PythonLexer()
+
+    ScrollView:
+        do_scroll_x: True
+        do_scroll_y: True
+        size_hint_y: .3
+        Label:
+            id: output
+            size_hint: None, None
+            text_size: None, None
+            size: self.texture_size
+            markup: True
 
     BoxLayout:
         orientation: 'horizontal'
         size_hint_y: .1
         spacing: 20
 
-        RoundedButton:
+        ThButton:
             text: "Run"
-            on_release: root.on_button1_click()
+            on_release: root.on_run(root.ids.output, root.ids.code_input)
 
-        RoundedButton:
+        ThButton:
             text: "Format"
             on_release: root.on_button2_click()
 
-<RoundedButton@Button>:
-    background_normal: ''  # Remove default background image
-    background_down: ''  # Remove background image when button is pressed
-    background_color: 0, 0, 0, 0  # Fully transparent background
-    canvas.before:
-        Color:
-            rgba: (0.2, 0.6, 0.86, 1) if self.state == 'normal' else (0.1, 0.5, 0.76, 1)  # Custom background color
-        RoundedRectangle:
-            pos: self.pos
-            size: self.size
-            radius: [10, 10, 10, 10]  # Rounded corners
+        ThButton:
+            text: "Load File"
+            on_release: root.on_button2_click()
+        
+        ThButton:
+            text: "Paste"
+            on_release: root.on_button2_click()
+
+
