@@ -1,13 +1,15 @@
-from kivy.app import App
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.codeinput import CodeInput
-from kivy.lang import Builder
-from kivy import platform
-import io
-import contextlib
-from kivy.core.clipboard import Clipboard
-from kivy.uix.tabbedpanel import TabbedPanel
 from autopep8 import fix_code
+from kivy.uix.tabbedpanel import TabbedPanel
+from kivy.core.clipboard import Clipboard
+import contextlib
+import io
+from kivy import platform
+from kivy.lang import Builder
+from kivy.uix.codeinput import CodeInput
+from kivy.uix.boxlayout import BoxLayout
+from kivy.app import App
+from gui_components import ThButton, ThTabbedPanelItem, MainScreen
+
 
 
 def ask_permission():
@@ -21,10 +23,6 @@ def ask_permission():
 
 
 ask_permission()
-
-# Load the KV file
-Builder.load_file('kv/main.kv')
-from gui_buttons import ThButton, ThTabbedPanelItem
 
 
 class CodeBoxLayout(BoxLayout):
@@ -52,13 +50,9 @@ class CodeBoxLayout(BoxLayout):
         print("Button 2 clicked!")
 
 
-class MainScreen(TabbedPanel):
-    def __init__(self, **kwargs):
-        super(MainScreen, self).__init__(**kwargs)
-
-
 class MyKivyApp(App):
     def build(self):
+        Builder.load_file('kv/main.kv')
         return MainScreen()
 
 
