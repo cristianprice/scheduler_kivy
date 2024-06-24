@@ -1,52 +1,28 @@
-#:import PythonLexer kivy.extras.highlight.PythonLexer
-#:include kv/buttons.kv
+#:include kv/codebox.kv
 
-<MyBoxLayout>:
-    orientation: 'vertical'
-    padding: 10
-    spacing: 10
+<MainScreen>:
+    do_default_tab: False
+    tab_width: dp(120)
 
-    ScrollView:
-        do_scroll_x: True
-        do_scroll_y: True        
-        CodeInput:
-            id: code_input
-            do_wrap: False
-            width: 800
-            height: 200
-            text: "print('Hello, World!')"
-            lexer: PythonLexer()
+    ThTabbedPanelItem:
+        text: 'Code Sandbox'            
+        CodeBoxLayout:
+            id: codeboxlayout
 
-    ScrollView:
-        do_scroll_x: True
-        do_scroll_y: True
-        size_hint_y: .3
-        Label:
-            id: output
-            size_hint: None, None
-            text_size: None, None
-            size: self.texture_size
-            markup: True
+    ThTabbedPanelItem:
+        text: 'Screen 2'
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'This is Screen 2'
+            Button:
+                text: 'Go to Screen 3'
 
-    BoxLayout:
-        orientation: 'horizontal'
-        size_hint_y: .1
-        spacing: 20
-
-        ThButton:
-            text: "Run"
-            on_release: root.on_run(root.ids.output, root.ids.code_input)
-
-        ThButton:
-            text: "Format"
-            on_release: root.on_button2_click()
-
-        ThButton:
-            text: "Load File"
-            on_release: root.on_button2_click()
-        
-        ThButton:
-            text: "Paste"
-            on_release: root.on_paste(root.ids.code_input)
-
-
+    ThTabbedPanelItem:
+        text: 'Screen 3'
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'This is Screen 3'
+            Button:
+                text: 'Go to Screen 1'

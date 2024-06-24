@@ -1,11 +1,28 @@
+#:import Themes gui_themes.Themes
+
 <ThButton@Button>:
     background_normal: ''  # Remove default background image
     background_down: ''  # Remove background image when button is pressed
     background_color: 0, 0, 0, 0  # Fully transparent background
+    color: Themes.control_text_color  # Text color
     canvas.before:
         Color:
-            rgba: (0.2, 0.6, 0.86, 1) if self.state == 'normal' else (0.1, 0.5, 0.76, 1)  # Custom background color
+            rgba: Themes.control_background_color if self.state == 'normal' else Themes.control_pressed_color  # Custom background color
         RoundedRectangle:
             pos: self.pos
             size: self.size
             radius: [10, 10, 10, 10]  # Rounded corners
+
+
+<ThTabbedPanelItem@TabbedPanelItem>:
+    background_normal: ''  # Remove default background image
+    background_down: ''  # Remove background image when button is pressed
+    background_color: 0, 0, 0, 0  # Fully transparent background
+    color: Themes.control_text_color  # Text color
+    canvas.before:
+        Color:
+            rgba: Themes.control_background_color if self.state == 'normal' else Themes.control_pressed_color  # Custom background color
+        RoundedRectangle:
+            pos: self.pos
+            size: (self.size[0] -2, self.size[1])  # Remove bottom padding
+            radius: [10, 10, 0, 0]  # Rounded corners
