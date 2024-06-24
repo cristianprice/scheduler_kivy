@@ -26,3 +26,33 @@
             pos: self.pos
             size: (self.size[0] -2, self.size[1])  # Remove bottom padding
             radius: [10, 10, 0, 0]  # Rounded corners
+
+
+<ThPopup>:
+    background_normal: ''  # Remove default background image
+    background_down: ''  # Remove background image when button is pressed
+    background_color: 0, 0, 0, 0  # Fully transparent background
+    color: Themes.control_text_color  # Text color
+    size_hint: .7, .5
+    #size: dp(400), dp(200)
+
+    canvas.before:
+        Color:
+            rgba: Themes.container_background_color 
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10, 10, 10, 10]  # Rounded corners
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        Label:
+            text: 'This is a popup!'
+            size_hint_y: 0.8
+        ThButton:
+            text: 'OK'
+            size_hint: None, None
+            size: dp(110), dp(50)
+            pos_hint: {'center_x': 0.5}
+            on_release: root.dismiss()

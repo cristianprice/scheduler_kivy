@@ -8,8 +8,7 @@ from kivy.lang import Builder
 from kivy.uix.codeinput import CodeInput
 from kivy.uix.boxlayout import BoxLayout
 from kivy.app import App
-from gui_components import ThButton, ThTabbedPanelItem, MainScreen
-
+from gui_components import ThButton, ThTabbedPanelItem, MainScreen, ThPopup
 
 
 def ask_permission():
@@ -25,20 +24,23 @@ def ask_permission():
 ask_permission()
 
 
+def execute_code(out_label, code_input):
+    stdout_capture = io.StringIO()
+    stderr_capture = io.StringIO()
+
+    with contextlib.redirect_stdout(stdout_capture), contextlib.redirect_stderr(stderr_capture):
+        try:
+            exec(code_input.text)
+            out_label.text += stdout_capture.getvalue()
+            out_label.text += stderr_capture.getvalue()
+        except Exception as e:
+            out_label.text += str(e)
+            out_label.text += '\n'
+
+
 class CodeBoxLayout(BoxLayout):
     def on_run(self, out_label, code_input: CodeInput):
-
-        stdout_capture = io.StringIO()
-        stderr_capture = io.StringIO()
-
-        with contextlib.redirect_stdout(stdout_capture), contextlib.redirect_stderr(stderr_capture):
-            try:
-                exec(code_input.text)
-                out_label.text += stdout_capture.getvalue()
-                out_label.text += stderr_capture.getvalue()
-            except Exception as e:
-                out_label.text += str(e)
-                out_label.text += '\n'
+        execute_code(out_label, code_input)
 
     def on_paste(self, code_input: CodeInput):
         code_input.text = Clipboard.paste()
@@ -46,8 +48,8 @@ class CodeBoxLayout(BoxLayout):
     def on_format(self, code_input: CodeInput):
         code_input.text = code_input.text = fix_code(code_input.text)
 
-    def on_button2_click(self):
-        print("Button 2 clicked!")
+    def on_load_file(self):
+        ThPopup(title='Hey There').open()
 
 
 class MyKivyApp(App):
