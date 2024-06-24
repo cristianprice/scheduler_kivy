@@ -3,7 +3,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.codeinput import CodeInput
 from kivy.lang import Builder
 from kivy import platform
-from gui_buttons import ThButton, ThTabbedPanelItem
 import io
 import contextlib
 from kivy.core.clipboard import Clipboard
@@ -25,6 +24,7 @@ ask_permission()
 
 # Load the KV file
 Builder.load_file('kv/main.kv')
+from gui_buttons import ThButton, ThTabbedPanelItem
 
 
 class CodeBoxLayout(BoxLayout):
